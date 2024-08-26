@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
 import { useState, useCallback } from 'react';
-import axios from 'axios';
+import ApiService from '../../services/index'
 
 const DashboardHeader = ({setProjects, allProjects}) => {
     const [searchTerm, setSearchTerm] = useState('')
@@ -37,15 +37,10 @@ const DashboardHeader = ({setProjects, allProjects}) => {
 
     const handleSearch = async (query) => {
         if (query === '') {
-            // Reset to full project list if search is cleared
             setProjects(allProjects);
           } else {
         try {
-          const response = await axios.get(`http://127.0.0.1:8000/api/projects/search/?q=${query}`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-          });
+          const response = await ApiService.searchProjects(query)
           setProjects(response.data);
         } catch (error) {
           console.error('Error searching projects:', error);
@@ -66,12 +61,7 @@ const DashboardHeader = ({setProjects, allProjects}) => {
         event.preventDefault();
     
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/projects/', formData, {
-                headers: {
-                    'Authorization': `Token ${localStorage.getItem('token')}`,
-                    'Content-Type': 'application/json'
-                },
-            });
+            const response = await ApiService.createProject(formData)
     
             setSuccess('Project added successfully!');
             setError('');

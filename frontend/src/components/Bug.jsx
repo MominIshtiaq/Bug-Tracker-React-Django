@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import NavBar from "./Navbar"
 import BugHeader from "./BugHeader"
-import axios from "axios"
+import ApiService from '../../services/index'
 import BugTable from "./BugTable"
 
 
@@ -17,11 +17,7 @@ const Bug = () => {
     useEffect(() => {
         const fetchDevelopers = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/developers/', {
-                    headers: {
-                        'Authorization': `Token ${localStorage.getItem('token')}`
-                    }
-                });
+                const response = await ApiService.getDevelopers()
                 setDevelopers(response.data);
             } catch (err) {
                 if (err.response && err.response.status === 403) {

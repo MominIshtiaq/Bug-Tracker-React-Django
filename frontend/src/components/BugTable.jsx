@@ -4,7 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Badge from 'react-bootstrap/Badge'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import ApiService from '../../services/index'
 import Container from 'react-bootstrap/esm/Container'
 
 const BugTable = ({projectid}) => {
@@ -15,7 +15,8 @@ const BugTable = ({projectid}) => {
     useEffect(() => {
         const fetchBugs = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/bug/${projectid}`);
+                const response = await ApiService.fetchBug(projectid)
+                console.log(response)
                 setBugs(response.data);
             } catch (err) {
                 setError('Failed to fetch bugs');
@@ -27,12 +28,12 @@ const BugTable = ({projectid}) => {
         fetchBugs();
     }, [projectid, error]);
 
-    console.log(Object.keys(bugs).length > 0 ? bugs : "helo");
     useEffect(() => {
         const fetchUser = async () => {
             if (bugs && bugs.length > 0) {
                 try {
-                    const response = await axios.get(`http://localhost:8000/api/users/${bugs[0].assigned_to}/`);
+                    const response = await ApiService.fetchUser(bugs[0].assigned_to)
+                    console.log(response)
                     setUser(response.data);
                 } catch (err) {
                     console.log(err);
@@ -45,7 +46,7 @@ const BugTable = ({projectid}) => {
 
     const handleStatusChange = async (bugId, newStatus) => {
         try {
-            const response = await axios.post(`http://localhost:8000/api/bug/${bugId}/change-status/`, { status: newStatus });
+            const response = await ApiService.changeBugStatus(bugId,newStatus)
             console.log('Status changed successfully:', response.data);
             setBugs((prevBugs) => 
                 prevBugs.map(bug => 
@@ -60,10 +61,7 @@ const BugTable = ({projectid}) => {
 
     const handleDeleteBug = async (bugId) => {
         try {
-            const response = await axios.delete(`http://localhost:8000/api/bug/${bugId}/delete-bug/`);
-            console.log('Bug deleted successfully:', response.data);
-    
-            // Remove the deleted bug from the local state
+            const response = await ApiService.deleteBug(bugId)
             setBugs(prevBugs => prevBugs.filter(bug => bug.id !== bugId));
     
         } catch (error) {

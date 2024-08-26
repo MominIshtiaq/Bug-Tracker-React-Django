@@ -1,27 +1,11 @@
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Image from 'react-bootstrap/Image'
-import { Link, useNavigate} from 'react-router-dom'
-import { useEffect } from 'react'
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Image from "react-bootstrap/Image";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 const Index = () => {
-  const navigate = useNavigate()
-  const token = localStorage.getItem('token')
-  const tokenExpiry = localStorage.getItem('expirationTime')
-
-  useEffect(() => {
-    if (!token || !tokenExpiry) {
-      navigate('/');
-    } else if (Date.now() > tokenExpiry) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('expirationTime');
-      navigate('/login');
-    } else {
-      navigate('/dashboard');
-    }
-  }, [token, tokenExpiry, navigate]);
-
-
   return (
     <Row className="vh-100">
       <Col md={5}>
@@ -30,7 +14,7 @@ const Index = () => {
       <Col md={7} className="p-5">
         <Row className="w-100 mb-3">
           <p className="text-secondary-emphasis text-end">
-            Already have an account?{' '}
+            Already have an account?{" "}
             <Link to="/login" className="text-decoration-none">
               Log in
             </Link>
@@ -39,10 +23,16 @@ const Index = () => {
         <Row className="h-100">
           <Col>
             <h4>Join Us!</h4>
-            <p>To begin this journey, tell us what type of account you would be opening</p>
+            <p>
+              To begin this journey, tell us what type of account you would be
+              opening
+            </p>
             <div className="manage">
               {/* Manager */}
-              <Link to="/signup/manager" className="text-decoration-none text-black">
+              <Link
+                to="/signup/manager"
+                className="text-decoration-none text-black"
+              >
                 <div className="box shadow-sm scaleup p-3 mb-3">
                   <div className="d-flex align-items-center">
                     <i className="fa-solid fa-user fa-2x me-3"></i>
@@ -58,7 +48,10 @@ const Index = () => {
               </Link>
 
               {/* Developer */}
-              <Link to="/signup/developer" className="text-decoration-none text-black">
+              <Link
+                to="/signup/developer"
+                className="text-decoration-none text-black"
+              >
                 <div className="box shadow-sm scaleup p-3 mb-3">
                   <div className="d-flex align-items-center">
                     <i className="fa-solid fa-suitcase fa-2x me-3"></i>
@@ -94,6 +87,6 @@ const Index = () => {
       </Col>
     </Row>
   );
-}
+};
 
-export default Index
+export default Index;

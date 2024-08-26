@@ -1,10 +1,7 @@
-import Routess from './components/Routes'
+import Routess from "./components/Routes";
+
 function App() {
-  return (
-    <>
-    <Routess />
-    </>
-  )
+  return <Routess />;
 }
 
-export default App
+export default App;

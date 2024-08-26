@@ -1,6 +1,6 @@
 import NavBar from './Navbar'
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import ApiService from '../../services/index'
 import DashboardHeader from './DashboardHeader';
 import DashboardProject from './DashboardProject';
 
@@ -12,11 +12,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/projects/', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
-        });
+        const response = await ApiService.fetchProjects()
         setProjects(response.data);
         setAllProjects(response.data)
       } catch (error) {

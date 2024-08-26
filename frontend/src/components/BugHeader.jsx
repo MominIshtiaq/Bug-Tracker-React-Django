@@ -1,10 +1,11 @@
-/* eslint-disable react/prop-types */
+import PropTypes from 'prop-types'
 import Container from "react-bootstrap/Container"
 import Button from "react-bootstrap/Button"
 import Modal from "react-bootstrap/Modal"
 import Form from "react-bootstrap/Form"
 import { useState, useEffect } from "react"
 import axios from "axios"
+import ApiService from '../../services/index'
 
 
 const BugHeader = ({projectid, devList}) => {
@@ -12,7 +13,7 @@ const BugHeader = ({projectid, devList}) => {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/projects/${projectid}/`);
+        const response = await ApiService.fetchSingleProject(projectid)
         setProject(response.data);
       } catch (err) {
         console.log(err);
@@ -59,20 +60,13 @@ const BugHeader = ({projectid, devList}) => {
             ...bugFormData,
             [name]:value
         })
-        console.log(bugFormData)
     }
 
     const handleFeatureSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/bug/', featureFormData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Token ${token}`
-                }
-            });
-            console.log('Bug added successfully:', response.data);
+            const response = await ApiService.createBug(featureFormData)
             setFeatureFormData({
                 title: '',
                 description: '',
@@ -92,13 +86,7 @@ const BugHeader = ({projectid, devList}) => {
     const handleBugSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/bug/', bugFormData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Token ${token}`
-                }
-            });
-            console.log('Bug added successfully:', response.data);
+            const response = await ApiService.createBug(bugFormData)
             setBugFormData({
                 title: '',
                 description: '',
@@ -263,6 +251,11 @@ const BugHeader = ({projectid, devList}) => {
       </Container>
     );
 };
+
+BugHeader.propTypes = {
+  projectid: PropTypes.string.isRequired,
+  devList: PropTypes.array.isRequired
+}
 
 
 export default BugHeader
