@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "../context/AuthContext";
 import AuthRedirect from "../components/AuthRedirect";
-import Index from "./Index";
-import SignUp from "./SignUp";
-import Login from "./Login";
-import Dashboard from "./Dashboard";
-import Bug from "./Bug";
+import Index from "../components/registration/Index";
+import SignUp from "../components/registration/SignUp";
+import Login from "../components/registration/Login";
+import Dashboard from "../components/Project Dashboard/Dashboard";
+import Bug from "../components/Bug Dashboard/Bug";
 
 const Routess = () => {
   return (
@@ -30,14 +30,7 @@ const Routess = () => {
               </AuthRedirect>
             }
           />
-          <Route
-            path="/bug/:project_id"
-            element={
-              <AuthRedirect>
-                <Bug />
-              </AuthRedirect>
-            }
-          />
+          <Route path="/bug/:project_id" element={<Bug />} />
         </Routes>
       </AuthProvider>
     </Router>

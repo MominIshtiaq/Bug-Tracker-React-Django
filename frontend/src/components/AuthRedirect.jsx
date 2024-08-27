@@ -6,7 +6,6 @@ const AuthRedirect = ({ children }) => {
   const { isAuthenticated, loading } = useContext(AuthContext);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const expirationTime = localStorage.getItem("expirationTime");
 
   useEffect(() => {
     if (!loading) {

@@ -1,21 +1,32 @@
+import { useState, useContext, useEffect } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import apiService from "../../services/index";
+import apiService from "../../../services/index";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
-const SignUp = () => {
-  const { user } = useParams();
+const Login = () => {
+  const { isAuthenticated, loading } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, loading, navigate]);
 
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     password: "",
-    user_type: user,
   });
+
+  const { setLoading } = useContext(AuthContext);
+  const { setIsAuthenticated } = useContext(AuthContext);
+
+  const [error, setError] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -25,14 +36,21 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
     try {
-      const response = await apiService.signup(formData);
-      console.log(response.data);
-      navigate("/login");
+      const response = await apiService.login(formData);
+      const token = response.data.token;
+      const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000;
+      localStorage.setItem("token", token);
+      localStorage.setItem("expirationTime", expirationTime);
+      setIsAuthenticated(true);
+      setLoading(false);
+      navigate("/dashboard");
     } catch (error) {
-      console.error(error);
+      setError("Invalid credentials. Please try again.");
+      console.log(error);
     }
   };
 
@@ -44,26 +62,16 @@ const SignUp = () => {
       <Col md={7} className="p-5">
         <Row className="h-100">
           <Col>
-            <h4>Sign Up</h4>
-            <p>Please fill your information below</p>
+            <h4>Login</h4>
+            <p>Please enter your login details</p>
             <div className="manage">
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="ControlInput1">
-                  <Form.Label>User Name</Form.Label>
-                  <Form.Control
-                    name="username"
-                    type="text"
-                    placeholder="Enter your Name"
-                    value={formData.username}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="ControlInput2">
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
                     name="email"
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="Enter your Email"
                     value={formData.email}
                     onChange={handleChange}
                   />
@@ -78,17 +86,19 @@ const SignUp = () => {
                     onChange={handleChange}
                   />
                 </Form.Group>
+
                 <Button type="submit" variant="primary">
-                  Sign Up &nbsp;&nbsp;&nbsp;
+                  Login &nbsp;&nbsp;&nbsp;
                   <i className="fa-solid fa-angle-right"></i>
                 </Button>
               </Form>
+              {error && <p className="text-danger mt-3">{error}</p>}
             </div>
             <hr />
             <div className="d-flex justify-content-between">
-              <p>Already have an account?</p>
-              <Link to="/login" className="text-decoration-none">
-                Login to your account
+              <p>Do not have an account?</p>
+              <Link to="/" className="text-decoration-none">
+                Create account
               </Link>
             </div>
           </Col>
@@ -98,4 +108,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;
