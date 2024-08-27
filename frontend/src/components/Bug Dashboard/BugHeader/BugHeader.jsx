@@ -1,9 +1,9 @@
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
-import ApiService from "../../../services/index";
-import FeatureModel from "./FeatureModel";
-import BugModel from "./BugModel";
+import ApiService from "../../../../services/index";
+import FeatureModel from "./BugHeaderModal/FeatureModel";
+import BugModel from "./BugHeaderModal/BugModel";
 
 const BugHeader = ({ project, devList }) => {
   const token = localStorage.getItem("token");
