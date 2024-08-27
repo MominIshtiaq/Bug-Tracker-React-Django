@@ -1,8 +1,8 @@
 import NavBar from "../partials/Navbar";
 import { useEffect, useState } from "react";
 import ApiService from "../../../services/index";
-import DashboardHeader from "./DashboardHeader/DashboardHeader";
-import DashboardProject from "./DashboardProject/DashboardProject";
+import DashboardHeader from "./project_dashboard_header/DashboardHeader";
+import DashboardProject from "./project_dashboard_list_project/DashboardProject";
 
 const Dashboard = () => {
   const [projects, setProjects] = useState([]);

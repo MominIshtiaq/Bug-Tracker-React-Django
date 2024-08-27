@@ -1,9 +1,7 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
-import { Link, useNavigate } from "react-router-dom";
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
@@ -33,9 +31,9 @@ const Index = () => {
                 to="/signup/manager"
                 className="text-decoration-none text-black"
               >
-                <div className="box shadow-sm scaleup p-3 mb-3">
+                <div className="box shadow-sm p-3 mb-3">
                   <div className="d-flex align-items-center">
-                    <i className="fa-solid fa-user fa-2x me-3"></i>
+                    <i className="box__icon fa-solid fa-user fa-2x me-3"></i>
                     <div>
                       <p>
                         <strong>Manager</strong>
@@ -52,9 +50,9 @@ const Index = () => {
                 to="/signup/developer"
                 className="text-decoration-none text-black"
               >
-                <div className="box shadow-sm scaleup p-3 mb-3">
+                <div className="box shadow-sm p-3 mb-3">
                   <div className="d-flex align-items-center">
-                    <i className="fa-solid fa-suitcase fa-2x me-3"></i>
+                    <i className="box__icon fa-solid fa-suitcase fa-2x me-3"></i>
                     <div>
                       <p>
                         <strong>Developer</strong>
@@ -68,9 +66,9 @@ const Index = () => {
 
               {/* Quality Assurance */}
               <Link to="/signup/qa" className="text-decoration-none text-black">
-                <div className="box shadow-sm scaleup p-3 mb-3">
+                <div className="box shadow-sm p-3 mb-3">
                   <div className="d-flex align-items-center">
-                    <i className="fa-solid fa-star fa-2x me-3"></i>
+                    <i className="box__icon fa-solid fa-star fa-2x me-3"></i>
                     <div>
                       <p>
                         <strong>QA</strong>

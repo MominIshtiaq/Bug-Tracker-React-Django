@@ -2,8 +2,8 @@
 import Container from "react-bootstrap/Container";
 import { useState, useCallback } from "react";
 import ApiService from "../../../../services/index";
-import SearchComponent from "./SearchComponent/SearchComponent";
-import ProjectModal from "./Modal/ProjectModal";
+import SearchComponent from "./project_dashboard_header_search_component/SearchComponent";
+import ProjectModal from "./project_dashboard_header_modal/ProjectModal";
 import { useNavigate } from "react-router-dom";
 
 const DashboardHeader = ({ setProjects, allProjects }) => {

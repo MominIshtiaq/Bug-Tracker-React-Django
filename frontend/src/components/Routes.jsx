@@ -4,8 +4,8 @@ import AuthRedirect from "../components/AuthRedirect";
 import Index from "../components/registration/Index";
 import SignUp from "../components/registration/SignUp";
 import Login from "../components/registration/Login";
-import Dashboard from "../components/Project Dashboard/Dashboard";
-import Bug from "../components/Bug Dashboard/Bug";
+import Dashboard from "../components/project_dashboard/Dashboard";
+import Bug from "../components/bug_dashboard/Bug";
 
 const Routess = () => {
   return (

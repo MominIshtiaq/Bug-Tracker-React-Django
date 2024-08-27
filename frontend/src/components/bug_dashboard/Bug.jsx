@@ -2,9 +2,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "../partials/Navbar";
-import BugHeader from "./BugHeader/BugHeader";
+import BugHeader from "./bug_dashboard_header/BugHeader";
 import ApiService from "../../../services/index";
-import BugTable from "./BugTable/BugTable";
+import BugTable from "./bug_dashboard_table/BugTable";
 
 const Bug = () => {
   const params = useParams();
